@@ -1,4 +1,6 @@
 const os = require('os');
+const pageUtils = require('./page.js');
+
 function timeTillNow(seconds) { // time in seconds
   let ss = 0;
   if (!(+seconds)) { return 'Just now'; } // if not a number, get a out
@@ -44,14 +46,16 @@ function calculateResources(){
   let resourceUsed = {};
   resourceUsed.uptime = timeTillNow(process.uptime());
   resourceUsed.memory = {
+    total: Math.trunc(os.totalmem()/1000000),
     free: Math.trunc(os.freemem()/1000000),
     using: Math.trunc(process.memoryUsage().heapUsed / 1000000) 
   }
-
+  return resourceUsed;
 } 
 
 function getServerStatus(req, res){
-  res.send(`<h1>This is test</h1>`);
+  res.set('Content-Type', 'text/html');
+  res.send(pageUtils.renderPage(calculateResources()));  
 }
 
 module.exports = getServerStatus;
