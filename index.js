@@ -55,29 +55,46 @@ function timeTillNow(seconds) { // time in seconds
 }
 
 // 2 days 5 hours 4 minutes 1 sec ago
-function calculateResources(){
-  let pageStats = {};
-  pageStats.appPath = __dirname;
-  pageStats.uptime = timeTillNow(process.uptime());
-  pageStats.memory = {
-    total: Math.trunc(os.totalmem()/1000000),
-    free: Math.trunc(os.freemem()/1000000),
-    using: Math.trunc(process.memoryUsage().heapUsed / 1000000) 
-  }
+function statusDetails(){
+  let pageStats = [];
+
+  pageStats.push({
+    title: 'App Path',
+    content: __dirname
+  })
+  
+  pageStats.push({
+    title: 'Last Restart',
+    content: timeTillNow(process.uptime())
+  });
+
+  pageStats.push({
+    title: 'System Memory',
+    content: `${Math.trunc(os.freemem()/1000000)} Mb free of ${Math.trunc(os.totalmem()/1000000)} Mb`
+  })
+
+  pageStats.push({
+    title: 'App Memory Usage',
+    content: `${Math.trunc(process.memoryUsage().heapUsed / 1000000)} Mb`
+  })
+
   return execute(`git log --pretty='format:%s' -n 1`)
   .then(lastLog => {
-    pageStats.lastUpdate = lastLog;
+    pageStats.push({
+      title: 'Last Update',
+      content: lastLog
+    })
+    console.log('pageStats', pageStats);
     return pageStats;
   })
   .catch(error  => {
-    pageStats.lastUpdate = 'Not available';
     return Promise.resolve(pageStats);
   })
 } 
 
 function getServerStatus(req, res){
   res.set('Content-Type', 'text/html');
-  calculateResources()
+  statusDetails()
   .then(resourcesCalculated => {
     res.send(pageUtils.renderPage(resourcesCalculated));
   })

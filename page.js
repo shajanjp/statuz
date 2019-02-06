@@ -1,10 +1,20 @@
 function renderPage(data){
-  return `
-  <!DOCTYPE html>
+  let tableRows = `<tr>
+    <td>Status</td>
+    <td>Live</td>
+  </tr>`;
+  data.forEach((d) => {
+    tableRows += `<tr>
+    <td>${d.title}</td>
+    <td>${d.content}</td>
+  </tr>`;
+  });
+
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Status</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/table.min.css">
     <style>
@@ -43,30 +53,7 @@ function renderPage(data){
     <div class="container">
       <table class="ui small table">
         <tbody>
-          <tr>
-            <td>Status</td>
-            <td>Live</td>
-          </tr>
-          <tr>
-            <td>App Path</td>
-            <td>${data.appPath}</td>
-          </tr>
-          <tr>
-            <td>Last Restart</td>
-            <td>${data.uptime}</td>
-          </tr>
-          <tr>
-            <td>Last Update</td>
-            <td>${data.lastUpdate}</td>
-          </tr>
-          <tr>
-            <td>System Memory</td>
-            <td>${data.memory.free} Mb free of ${data.memory.total} Mb</td>
-          </tr>
-          <tr>
-            <td>App Memory Usage</td>
-            <td>${data.memory.using} Mb</td>
-          </tr>
+          ${tableRows}
         </tbody>
       </table>
     </div>
