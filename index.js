@@ -84,7 +84,6 @@ function statusDetails(){
       title: 'Last Update',
       content: lastLog
     })
-    console.log('pageStats', pageStats);
     return pageStats;
   })
   .catch(error  => {
