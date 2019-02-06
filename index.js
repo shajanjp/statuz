@@ -1,5 +1,18 @@
 const os = require('os');
 const pageUtils = require('./page.js');
+const exec = require('child_process').exec;
+
+function execute(command) {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject(stderr);
+      } else {
+        resolve(stdout);
+      }
+    });
+  });
+}
 
 function timeTillNow(seconds) { // time in seconds
   let ss = 0;
