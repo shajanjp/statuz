@@ -56,19 +56,34 @@ function timeTillNow(seconds) { // time in seconds
 
 // 2 days 5 hours 4 minutes 1 sec ago
 function calculateResources(){
-  let resourceUsed = {};
-  resourceUsed.uptime = timeTillNow(process.uptime());
-  resourceUsed.memory = {
+  let pageStats = {};
+  pageStats.appPath = __dirname;
+  pageStats.uptime = timeTillNow(process.uptime());
+  pageStats.memory = {
     total: Math.trunc(os.totalmem()/1000000),
     free: Math.trunc(os.freemem()/1000000),
     using: Math.trunc(process.memoryUsage().heapUsed / 1000000) 
   }
-  return resourceUsed;
+  return execute(`git log --pretty='format:%s' -n 1`)
+  .then(lastLog => {
+    pageStats.lastUpdate = lastLog;
+    return pageStats;
+  })
+  .catch(error  => {
+    pageStats.lastUpdate = 'Not available';
+    return Promise.resolve(pageStats);
+  })
 } 
 
 function getServerStatus(req, res){
   res.set('Content-Type', 'text/html');
-  res.send(pageUtils.renderPage(calculateResources()));  
+  calculateResources()
+  .then(resourcesCalculated => {
+    res.send(pageUtils.renderPage(resourcesCalculated));
+  })
+  .catch(error => {
+    res.send("Resource calculation error");
+  })
 }
 
 module.exports = getServerStatus;

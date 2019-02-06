@@ -13,9 +13,6 @@ function renderPage(data){
       color: #333;
       background-color: #efefef;
     }
-    .success{
-      color: #1fab89;
-    }
     .container {
       position: absolute;
       top: 50%;
@@ -32,6 +29,7 @@ function renderPage(data){
       -webkit-box-shadow: 0 4px 8px -8px #444;
       box-shadow: 0 4px 8px -8px #444;
       border-radius: 0px;
+      border-top: 2px solid #a3de83;
       transition: 0.5s box-shadow ease-in-out;
     }
     .ui.table:hover{
@@ -47,19 +45,23 @@ function renderPage(data){
         <tbody>
           <tr>
             <td>Status</td>
-            <td class="success">Live</td>
+            <td>Live</td>
+          </tr>
+          <tr>
+            <td>App Path</td>
+            <td>${data.appPath}</td>
           </tr>
           <tr>
             <td>Last Restart</td>
             <td>${data.uptime}</td>
           </tr>
           <tr>
-            <td>Total Memory</td>
-            <td>${data.memory.total} Mb</td>
+            <td>Last Update</td>
+            <td>${data.lastUpdate}</td>
           </tr>
           <tr>
-            <td>Free Memory</td>
-            <td>${data.memory.free} Mb</td>
+            <td>System Memory</td>
+            <td>${data.memory.free} Mb free of ${data.memory.total} Mb</td>
           </tr>
           <tr>
             <td>App Memory Usage</td>
