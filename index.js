@@ -60,7 +60,7 @@ function statusDetails(){
 
   pageStats.push({
     title: 'App Path',
-    content: __dirname
+    content: __dirname.split('node_modules')[0]
   })
   
   pageStats.push({
