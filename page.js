@@ -21,7 +21,7 @@ function renderPage(data){
     body{
       font-family: 'Open Sans', sans-serif;
       color: #333;
-      background-color: #efefef;
+      background-image: linear-gradient(90deg, #d7fbe8, #62d2a2);
     }
     .container {
       position: absolute;
@@ -32,21 +32,24 @@ function renderPage(data){
       transform: translateX(-50%) translateY(-50%);
     }
     .ui.table{
-      border-radius: 0px;
-      border: 0px;
-    }
-    .ui.table{
+      border: 0px !important;
+      border-radius: 4px;
       -webkit-box-shadow: 0 4px 8px -8px #444;
       box-shadow: 0 4px 8px -8px #444;
-      border-radius: 0px;
-      border-top: 2px solid #a3de83;
       transition: 0.5s box-shadow ease-in-out;
     }
     .ui.table:hover{
       -webkit-box-shadow: 0 10px 8px -8px #AAA;
       box-shadow: 0 10px 8px -8px #AAA;
-      border-radius: 0px;
     }
+    .ui.table tr,
+    .ui.table td{
+      border: none !important;
+    }
+    .ui.table tr:nth-child(2n){
+      background-color: #f4f4f4;
+    }
+
   </style>
   </head>
   <body>
