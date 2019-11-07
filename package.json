@@ -1,6 +1,6 @@
 {
   "name": "statuz",
-  "version": "1.0.22",
+  "version": "1.0.3",
   "description": "Server status page simplified.",
   "main": "index.js",
   "scripts": {
